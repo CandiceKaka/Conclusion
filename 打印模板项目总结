@@ -1,1 +1,72 @@
 
+1.可以维护一个数据的时候，不要用两个数据来交替。比如打印模板左右两侧用到同一个数组的数据，要用一 个currentIndex来维护同一个数据,
+  而不是用currentItem来维护两个数据。主项目和新项目都用到打印模板文件。用新页面来维护一套数据，而不是把代码copy一份，维护两个数据
+  
+2.clickoutSide的使用
+  1）引用:
+      import Clickoutside from 'element-ui/lib/utils/clickoutside'
+  2）使用:
+      <div v-clickoutside="doSomething"></div>   doSomething是一个方法 在div区域以外点击都会触发此方法
+ 
+ 3.vue中使用class由属性控制的时候，最好写成一一对应的，这样可以省事很多
+        比如:设置左对齐右对齐属性: 可以直接给其填充属性leftAlign和rightAlign
+        然后在使用的时候，可以直接
+       <span class="block-wrap" :class="[oneline.content[1].align]"></span>
+ 
+ 4.引入element ui的Message MessageBox的时候，不要在main.js中引入，否则会一直有弹窗
+ 
+ 5.vue中的this.$set()。修改数组，对象的时候，想要的效果不能及时的反应在页面上，这时候需要用这种方法对数据进行修改
+   this.$set(target,key,value)
+        target:要更改的数据源(数组或者对象)
+        key:更改的具体数据
+        value:重新赋的值
+  
+  6.vue打包的时候，需要修改配置的话，就在config-index.js中的build选项中修改
+        1)比如修改打包后的index.html的名称
+        2)修改打包后的路径
+         
+         build: {
+                index: path.resolve(__dirname, '../dist/index.htm'),
+                assetsPublicPath: '/print'
+         }
+  7.window.print的打印的问题，只能打印出一页。
+    原因：滚动条不能放在自己写的区域内，而要在body或者html上，否则会只打印当前窗口的内容。
+  
+  8.写代码时，不要进行多余的判断。在已知判断条件上可以继续判断
+  
+  9.vue中阻止事件的冒泡
+        @click.stop
+        
+  10.需要用分割线的时候，不要使用hr标签，此标签的很多属性已经作废。可以用div，只设置宽高为0，只设置上边框或者下边框，这样扩展性也比较好。
+     比如变换颜色，设置为虚线等样式
+  
+  11.vue中的深度监视(比如数组)的写法
+        watch: {
+	  printArrayProp: {
+	     handler () {
+	       this.printArray = this.printArrayProp
+	     },
+	     deep: true
+	  }
+            
+        }
+  12.打印的时候，会有自己不想打印的区域：
+  @media print {
+    .print-out {
+      display: none
+    }
+  }
+  
+  13.使用window.print()当四个边距都不需要的时候，可以简单使用样式去除页眉页脚以及链接等
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+  
+  14.如果自己开启一个小的项目，记得在要在.gitignore中新加一个忽略文件路径
+    print-front/node_modules
+                       
+
+
+
+
